@@ -35,4 +35,14 @@ class Message {
       isMine: map["isMine"] as bool,
     );
   }
+
+  Message copyWith({String? imageUrl}) {
+    return Message(
+      id: id,
+      message: message,
+      createdAt: createdAt,
+      isMine: isMine,
+      imageUrl: imageUrl,
+    );
+  }
 }
