@@ -44,5 +44,4 @@ Future<void> deleteAllMessages(String userId) async {
   }
 
   await batch.commit();
-  print("All messages deleted successfully.");
 }
