@@ -1,4 +1,5 @@
 import 'package:chat_bot_gemini_ai/providers/providers.dart';
+import 'package:chat_bot_gemini_ai/screens/send_image_screen.dart';
 import 'package:chat_bot_gemini_ai/widgets/messages_list.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -73,7 +74,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const SendImageScreen(),
+                      ));
+                    },
                     icon: const Icon(Icons.image),
                   ),
                   IconButton(
