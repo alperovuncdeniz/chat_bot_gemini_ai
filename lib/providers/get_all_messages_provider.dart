@@ -30,3 +30,19 @@ final getAllMessagesProvider =
     return controller.stream;
   },
 );
+
+Future<void> deleteAllMessages(String userId) async {
+  final batch = FirebaseFirestore.instance.batch();
+  final messagesRef = FirebaseFirestore.instance
+      .collection("conversations")
+      .doc(userId)
+      .collection("messages");
+
+  final snapshot = await messagesRef.get();
+  for (var doc in snapshot.docs) {
+    batch.delete(doc.reference);
+  }
+
+  await batch.commit();
+  print("All messages deleted successfully.");
+}

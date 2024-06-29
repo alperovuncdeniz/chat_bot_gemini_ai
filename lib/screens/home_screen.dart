@@ -1,3 +1,4 @@
+import 'package:chat_bot_gemini_ai/providers/get_all_messages_provider.dart';
 import 'package:chat_bot_gemini_ai/providers/providers.dart';
 import 'package:chat_bot_gemini_ai/screens/send_image_screen.dart';
 import 'package:chat_bot_gemini_ai/widgets/messages_list.dart';
@@ -14,6 +15,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
+  final userId = FirebaseAuth.instance.currentUser!.uid;
   late final TextEditingController _messageController;
   final apiKey = dotenv.env["API_KEY"] ?? "";
 
@@ -34,7 +36,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        title: const Text("Gemini Ai"),
         actions: [
+          IconButton(
+            onPressed: () async {
+              await deleteAllMessages(userId);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("Message deleted.")),
+              );
+            },
+            icon: const Icon(Icons.delete),
+          ),
           Consumer(builder: (context, ref, child) {
             return IconButton(
               onPressed: () {
@@ -98,11 +110,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final message = _messageController.text.trim();
 
     if (message.isEmpty) return;
+
+    setState(() {
+      _messageController.clear();
+    });
     await ref.read(chatProvider).sendTextMessage(
-          textPromt: _messageController.text,
+          textPromt: message,
           apiKey: apiKey,
         );
-
-    _messageController.clear();
   }
 }
