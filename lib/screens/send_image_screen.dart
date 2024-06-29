@@ -39,7 +39,9 @@ class _SendImageScreenState extends ConsumerState<SendImageScreen> {
     if (pickedImage == null) {
       return;
     }
-    image = pickedImage;
+    setState(() {
+      image = pickedImage;
+    });
   }
 
   void _removeImage() async {

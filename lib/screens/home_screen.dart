@@ -82,12 +82,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     icon: const Icon(Icons.image),
                   ),
                   IconButton(
-                    onPressed: () async {
-                      await ref.read(chatProvider).sendTextMessage(
-                            textPromt: _messageController.text,
-                            apiKey: apiKey,
-                          );
-                    },
+                    onPressed: sendMessage,
                     icon: const Icon(Icons.send),
                   ),
                 ],
@@ -97,5 +92,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
       ),
     );
+  }
+
+  Future sendMessage() async {
+    final message = _messageController.text.trim();
+
+    if (message.isEmpty) return;
+    await ref.read(chatProvider).sendTextMessage(
+          textPromt: _messageController.text,
+          apiKey: apiKey,
+        );
+
+    _messageController.clear();
   }
 }
