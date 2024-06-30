@@ -1,6 +1,9 @@
 # chat_bot_gemini_ai
 
-A new Flutter project.
+* Flutter
+* Firebase
+* Riverpod
+* GeminiAI API
 
 ## Getting Started
 
